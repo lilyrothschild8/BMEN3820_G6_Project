@@ -13,8 +13,8 @@ function dndt = G6_1ODE(t,N,flag,I_max,k1,k2,k3,k4,kp,ke,a,dc)
         %ke antigen driven suppresion threshold
         %a is the rate of growth of cytokine pathology
         %dc is the rate of loss of cytokine pathology
-        %phi is the half maximal constants 
-        %qs is the rate constant
+        %a is the rate growth cytokine pathology 
+        %dc is the rate of loss of cytokine pathology 
         
     %OUTPUT:
     %dndt is the population array
