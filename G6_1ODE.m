@@ -20,7 +20,7 @@ function dndt = G6_1ODE(t,N,flag,I_max,k1,k2,k3,k4,kp,ke,a,dc)
     %dndt is the population array
     %dndt(1) infected cells = I 
     %dndt(2) activated CD8 T Cells = E
-    %dndt(3) immunopathology = Q 
+    %dndt(3) pathology = P
     
 dndt = zeros(size(N));
 dndt(1)=k1.*N(1).*(1-(N(1))/I_max)-k2*N(1).*N(2); 
