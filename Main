@@ -32,6 +32,7 @@ N0=[0.0001,0.00005,0;
 0.000001, 0.00002,0;
 1, 0.1,0]*I_max;
 
+subplot(2,2,1)
 for i=1:length(N0)
         fprintf('i=%f\n',i)
         [t,N]=ode45('G6_1ODE', [0 tend], N0(i,:), [], I_max,k1,k2,k3,k4,kp,ke,a,dc);
@@ -53,8 +54,9 @@ N0=[0.0001,0.00005,0;...
 0.0005,0.0003,0;...
 0.0005,0.0001,0]*I_max;
  
-figure(2);
+
 colororder(newcolors);
+subplot(2,2,2)
 for i=1:length(N0)
         fprintf('i=%f\n',i);
         [t,N]=ode45('G6_1ODE', [0 tend], N0(i,:), [], I_max,k1,k2,k3,k4,kp,ke,a,dc);
@@ -67,8 +69,9 @@ ylabel('Infected cells (I/I_{max})')
 xlabel('Time')
 axis([0 20 10^-6 1]);
  
-figure(3);
+
 colororder(newcolors);
+subplot(2,2,3)
 for i=1:length(N0)
         fprintf('i=%f\n',i);
         [t,N]=ode45('G6_1ODE', [0 tend], N0(i,:), [], I_max,k1,k2,k3,k4,kp,ke,a,dc);
@@ -81,7 +84,7 @@ ylabel('Infected cells (E/I_{max})')
 xlabel('Time')
 axis([0 20 10^-6 1]);
  
-figure(4);
+subplot(2,2,4)
 colororder(newcolors);
 for i=1:length(N0)
         fprintf('i=%f\n',i);
