@@ -1,0 +1,125 @@
+%  Main Script CD8- T-Cell  Modeling
+%     param(1) = 1.3;       %k1, infection spread rate (/day)
+%     param(2) = 10000000;  %I_max, maximum number of infected cells (cells)
+%     param(3) = 0.000005;  %k2, transmission probability per encounter (/cells/day)
+%     param(4) = 1;         %k3, antigen driven CD8 T cell proliferation rate (/day)
+%     param(5) = 3;         %k4, antigen driven CD8 T cell suppression rate (/day)
+%     param(6) = 10;        %kp, antigen driven proliferation threshold (cells)
+%     param(7) = 200000;    %ke, antigen driven suppression threshold (cells)
+%     param(8) = 10e-8;     %a, rate of growth of cytokine pathology (/cells^2/day)
+%     param(9) = 1;         %dc
+tend = 20;
+%Parameters indicated in supplemental materials
+I_max=1e6; k1=1.3; k2=5e-5; k3=1; k4=3; ke=2e5; kp=10; a=1e-8; dc=1;
+ 
+% N0_1=1;
+% N0_2=1;
+% [t,N]=ode45('infectionEq', [0 tend], [N0_1 N0_2], [], I_max,k1,k2,k3,k4,kp,ke);
+% loglog(N(:,1)/I_max,N(:,2)/I_max);
+newcolors = [0, 0, 255;0, 150, 255; 137, 207, 240;...
+    255,105,180; 219, 112, 147; 255,192,203; 
+    169, 169, 169; 169, 169, 169;255, 0, 0;255, 0, 0]./255;
+figure;
+colororder(newcolors);
+N0=[0.0001,0.00005,0;
+0.00002,0.00005,0;
+0.000002,0.00005,0;
+0.0005,0.0015,0;
+0.0005,0.0003,0;
+0.0005,0.0001,0;
+1, 0.12,0;
+1, 0.07,0;
+0.000001, 0.00002,0;
+1, 0.1,0]*I_max;
+
+for i=1:length(N0)
+        fprintf('i=%f\n',i)
+        [t,N]=ode45('G6_1ODE', [0 tend], N0(i,:), [], I_max,k1,k2,k3,k4,kp,ke,a,dc);
+        loglog(N(:,1)/I_max,N(:,2)/I_max,'linewidth',2);
+        %keyboard
+        hold on;
+end
+hold off
+title('Figure 1B')
+xlabel('Infected cells (I/I_{max})')
+ylabel('CD8 T cells');
+axis([10^(-6) 1 10^(-6) 1]);
+hold off
+ 
+N0=[0.0001,0.00005,0;...
+0.00002,0.00005,0;...
+0.000002,0.00005,0;...
+0.0005,0.0015,0;...
+0.0005,0.0003,0;...
+0.0005,0.0001,0]*I_max;
+ 
+figure(2);
+colororder(newcolors);
+for i=1:length(N0)
+        fprintf('i=%f\n',i);
+        [t,N]=ode45('G6_1ODE', [0 tend], N0(i,:), [], I_max,k1,k2,k3,k4,kp,ke,a,dc);
+        semilogy(t,N(:,1)/I_max,'linewidth',2);
+        hold on;
+end
+hold off
+title('Figure 1C')
+ylabel('Infected cells (I/I_{max})')
+xlabel('Time')
+axis([0 20 10^-6 1]);
+ 
+figure(3);
+colororder(newcolors);
+for i=1:length(N0)
+        fprintf('i=%f\n',i);
+        [t,N]=ode45('G6_1ODE', [0 tend], N0(i,:), [], I_max,k1,k2,k3,k4,kp,ke,a,dc);
+        semilogy(t,N(:,2)/I_max,'linewidth',2);
+        hold on;
+end
+hold off
+title('Figure 1D')
+ylabel('Infected cells (E/I_{max})')
+xlabel('Time')
+axis([0 20 10^-6 1]);
+ 
+figure(4);
+colororder(newcolors);
+for i=1:length(N0)
+        fprintf('i=%f\n',i);
+        [t,N]=ode45('G6_1ODE', [0 tend], N0(i,:), [], I_max,k1,k2,k3,k4,kp,ke,a,dc);
+        plot(t,N(:,3),'linewidth',2);
+        hold on;
+end
+hold off
+title('Figure 1E')
+ylabel('Cytokine Pathology (A.U)')
+xlabel('Time')
+axis([0 20 0 20]);
+
+
+% figure(5);
+% for i=1:length(N0)
+%         fprintf('i=%f\n',i);
+%         [t,N]=ode45('G6_1ODE', [0 tend], N0(i,:), [], I_max,k1,k2,k3,k4,kp,ke,a,dc);
+%         %heatmap(xvalues, yvalues, cdata);
+%         hold on;
+% end
+% hold off 
+% title('With Exhaustion');
+% xlabel('Infected Cells (I/I_{max)');
+% ylabel('CD8 T Cells (E/I_{max}');
+% axis([10^-5 10^-1 10^-5 10^-1]);
+% 
+% figure(6);
+% for i=1:length(N0)
+%         fprintf('i=%f\n',i)
+%         [t,N]=ode45('G6_1ODE', [0 tend], N0(i,:), [], I_max,k1,k2,k3,k4,kp,ke,a,dc);
+%         %heatmap(xvalues, yvalues, cdata);
+%         %heatmap(
+%         hold on;
+% end
+% hold off 
+% title('Without Exhaustion');
+% xlabel('Infected Cells (I/I_{max)');
+% ylabel('CD8 T Cells (E/I_{max}');
+% axis([10^-5 10^-1 10^-5 10^-1]);
+% 
