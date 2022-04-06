@@ -99,6 +99,14 @@ xlabel('Time')
 axis([0 20 0 20]);
 
 
+%title of subplots 
+ sgtitle({'Interaction between Infected Cells and CD8 T Cells';       
+    ['I_{max}=',num2str(I_max),', k_{1}=',num2str(k1),', k_{2}=',num2str(k2),', k_{3}=',num2str(k3)...
+    ', k_{4}=',num2str(k4), ', k_{p}=',num2str(kp), ', k_{e}=', num2str(ke),', a=', num2str(a)...
+    ,', d_{c}=', num2str(dc),]})
+
+
+
 % figure(5);
 % for i=1:length(N0)
 %         fprintf('i=%f\n',i);
