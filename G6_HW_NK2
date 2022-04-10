@@ -1,0 +1,52 @@
+%  HW 2 Script CD8- T-Cell  Modeling
+  %INPUT parameters:
+        %k1 is the infection spread rate
+        %I_max is the maximum number of infected cells 
+        %k2 is the killing rate of infected cells by CD8 T cells
+        %k3 is the antigen driven CDT8 cell proliferation rate 
+        %k4 is the antigen driven CDT8 cell proliferation rate 
+        %k5 is the NK cell activation rate OR NK cell activation rate with cell depletion 
+        %kp is the  antigen driven proliferation threshold
+        %ke is the antigen driven suppresion threshold
+        %phi_n  is the NK cell activation rate 
+        %zeta is the efficacy of NK cell suppression of CD8 T cell proliferation
+        %phi_e is the NK cell efficacy threshold 
+        %gamma is the rate of elimination of infected cells by NK cells 
+        
+tend = 20;
+%Parameters indicated in supplemental materials
+I_max=1e6; k1=1.5; k2=4e-4; k3=1.55; k4=3; ke=1e5; kp=1000; phi_n=100;
+phi_e=0.5; zeta=0.3; gamma=0.1; a=10e-8; dc=1; 
+
+k5=5; %NK cell activation rate 5/day 
+%k5=0; %cell activation rate with NK cell depletion 0/day 
+
+newcolors = [0, 0, 255;0, 150, 255; 137, 207, 240;...
+    255,105,180; 219, 112, 147; 255,192,203; 
+    169, 169, 169; 169, 169, 169;255, 0, 0;255, 0, 0]./255;
+
+figure;
+colororder(newcolors);
+N0=[0.0001,0.00005,0;
+0.00002,0.00005,0;
+0.000002,0.00005,0;
+0.0005,0.0015,0;
+0.0005,0.0003,0;
+0.0005,0.0001,0;
+1, 0.12,0;
+1, 0.07,0;
+0.000001, 0.00002,0;
+1, 0.1,0]*I_max;
+
+for i=1:length(N0)
+        fprintf('i=%f\n',i)
+        [t,N]=ode45('G6_2ODE', [0 tend], N0(i,:), [], I_max,k1,k2,k3,k4,k5,kp,ke,phi_n,phi_e,zeta,gamma);
+        loglog(N(:,1)/I_max,N(:,2)/I_max,'linewidth',2);
+        hold on;
+end
+hold off
+title('Figure 3C')
+xlabel('Infected cells (I/I_{max})')
+ylabel('CD8 T cells (E/I_{max})');
+ylim([10e-5 10e-3])
+xlim([10e-5 10e-1])
