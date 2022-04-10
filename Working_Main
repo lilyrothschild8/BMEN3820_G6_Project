@@ -42,7 +42,7 @@ for i=1:length(N0)
         hold on;
 end
 hold off
-title('Figure 1B')
+title('Competition Model: CD8 vs. Cells')
 xlabel('Infected cells (I/I_{max})')
 ylabel('CD8 T cells');
 axis([10^(-6) 1 10^(-6) 1]);
@@ -64,7 +64,7 @@ for i=1:length(N0)
         hold on;
 end
 hold off
-title('Figure 1C')
+title('Proportion of CD8 T-cells over Time')
 ylabel('Infected cells (I/I_{max})')
 xlabel('Time')
 axis([0 20 10^-6 1]);
@@ -78,7 +78,7 @@ for i=1:length(N0)
         hold on;
 end
 hold off
-title('Figure 1D')
+title('Proportion of Infected Cells over Time')
 ylabel('CD8 T Cells (E/I_{max})')
 xlabel('Time')
 axis([0 20 10^-6 1]);
@@ -92,7 +92,7 @@ for i=1:length(N0)
         hold on;
 end
 hold off
-title('Figure 1E')
+title('Cytokine Pathology')
 ylabel('Cytokine Pathology (A.U)')
 xlabel('Time')
 axis([0 20 0 20]);
