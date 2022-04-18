@@ -1,6 +1,7 @@
+%function Nc = G6_2ODE(t,N,flag,I_max,k1,k2,k3,k4,k5,kp,ke,phi_n,phi_e,zeta,gamma,a,dc) 
 function Nc = G6_2ODE(t,N,flag,I_max,k1,k2,k3,k4,k5,kp,ke,phi_n,phi_e,zeta,gamma) 
 	%CDT8_ODE defines the ODEs for CDT8 Model
-    %call using G6_2ODE(t,N,flag,I_max,k1,k2,k3,k4,p,ke,phi_n,phi_e,zeta,gamma,a,dc), 
+     
     %where 'flag' denotes the location where parameters are set
         %INPUT parameters:
         %k1 is the infection spread rate
@@ -17,17 +18,11 @@ function Nc = G6_2ODE(t,N,flag,I_max,k1,k2,k3,k4,k5,kp,ke,phi_n,phi_e,zeta,gamma
         %a is the rate growth cytokine pathology 
         %dc is the rate of loss of cytokine pathology 
        
-    %OUTPUT:
-    %Nc is the population array
-    %Nc(1) infected cells = I 
-    %Nc(2) activated CD8 T Cells = E
-    %Nc(3) NK cells = NK 
-    %Nc(4) Pathology = P 
+   
 
   Nc=zeros(size(N));
   Nc(1)=k1.*N(1).*(1-(N(1)/I_max))-(k2*N(1).*N(2))-(gamma*N(1).*N(3));
   Nc(2)=k3*(1-zeta*((N(3))./(phi_e+N(3))))*(N(1).*N(2))./(kp+N(1))-k4*((N(1).*N(2))./(ke+N(1)));
   Nc(3)=k5.*(N(1)./(phi_n+N(1))-N(3));
-  
-  
+% Nc(4)=a*N(1).*N(2)-dc.*N(4);
 end
