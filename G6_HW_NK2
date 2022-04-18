@@ -44,9 +44,34 @@ for i=1:length(N0)
         loglog(N(:,1)/I_max,N(:,2)/I_max,'linewidth',2);
         hold on;
 end
+
+%Ifun=(k3*ke-k4*kp)/(k4-k3);
+%Efun=k1/k2*(1-Ifun/I_max);
+%loglog(Ifun/I_max,Efun/I_max,'o','markersize',12,'markeredgecolor','r')
 hold off
-title('Figure 3C')
+
+title('Competition Model with NK Cells')
 xlabel('Infected cells (I/I_{max})')
 ylabel('CD8 T cells (E/I_{max})');
-ylim([10e-5 10e-3])
+ylim([10e-6 10e-2])
 xlim([10e-5 10e-1])
+%axis([10^(-6) 10^(0) 10^(-6) 1]);
+hold off
+
+%% Part B
+figure(2);
+colororder(newcolors);
+for i=1:length(N0)
+        fprintf('i=%f\n',i);
+        [t,N]=ode45('G6_2ODE', [0 tend], N0(i,:), [], I_max,k1,k2,k3,k4,k5,kp,ke,phi_n,phi_e,zeta,gamma);
+        plot(t,N(:,3),'linewidth',2);
+        hold on;
+end
+
+title('Cytokine Pathology')
+ylabel('Cytokine Pathology (A.U)')
+xlabel('Time (Days)')
+% ylim([0 3])
+% xlim([0 20])
+axis([0 20 0 3]);
+hold off
