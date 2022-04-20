@@ -21,6 +21,8 @@ tend = 20;
 I_max=1e6; k1=1.5; k2=4e-4; k3=1.55; k4=3; ke=1e5; kp=1000; phi_n=100; 
 phi_e=0.5; a=1e-8; dc=1; zeta=0.3; gamma=0.1; k5=5; 
 
+%k5=0 for NK Cell Depletion 
+
 
 newcolors = [0, 0, 255;0, 150, 255; 137, 207, 240;... %dark blue, neon blue, pale blue 
     255,105,180; 219, 112, 147; 255,192,203; %redish pink, hot pink, light pink
@@ -50,6 +52,7 @@ xlabel('Infected cells (I/I_{max})')
 ylabel('CD8 T cells (E/I_{max})');
 ylim([10e-6 10e-2])
 xlim([10e-5 10e-1])
+
 hold off 
 
 %Reset Initial Condition Array
