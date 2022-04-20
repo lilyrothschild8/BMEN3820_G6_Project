@@ -1,0 +1,60 @@
+%HW 2 Solution
+
+tend = 20;
+%Parameters indicated in supplemental materials
+I_max=1e6; k1=1.5; k2=4e-4; k3=1.55; k4=3; ke=1e5; kp=1000; phi_n=100; 
+phi_e=0.5; a=1e-8; dc=1; zeta=0.3; gamma=0.1; k5=0; 
+
+newcolors = [0, 0, 255;0, 255, 0; 255, 0,0;... %dark blue, neon blue, pale blue 
+    255,105,180; 219, 112, 147; 255,192,203; %redish pink, hot pink, light pink
+    169, 169, 169; 169, 169, 169;255, 0, 0;255, 0, 0]./255; %gray,gray, red, red 
+
+figure;
+colororder(newcolors);
+% Create Initial Conditions Array 
+N0(:,1)= [0.0001, 0.0015, 0.015]'*I_max;
+N0(:,2)=[1e-4,1e-4,1e-4]'*I_max;
+[m,n]=size(N0);
+N0(:,3)=zeros([1,m]);
+
+figure(1);
+for i=1:m
+        fprintf('i=%f\n',i)         
+        [t,N]=ode45('G6_2ODE', [0 tend], N0(i,:), [], I_max,k1,k2,k3,k4,k5,kp,ke,phi_n,phi_e,zeta,gamma);
+
+        loglog(N(:,1)/I_max,N(:,2)/I_max,'linewidth',2);
+        hold on;
+end
+title('Competition Model with NK Cells (NK Cell Depletion)')
+xlabel('Infected cells (I/I_{max})')
+ylabel('CD8 T cells (E/I_{max})');
+ylim([10e-6 10e-2])
+xlim([10e-5 10e-1])
+legend( {'Low-Mid Loads','High Loads', 'Intermediate Loads'}, 'Location', 'northeast', 'FontSize',10); 
+hold off 
+
+% not homework
+%Reset Initial Condition Array
+% clear N0;
+% N0(:,1)= [0.0015, 0.015, 0.0001]'*I_max;
+% N0(:,2)=[0.001,0.001,0.001]'*I_max;
+% [m,n]=size(N0);
+% N0(:,3)=zeros([1,m]);
+% N0(:,4)= zeros([1,m]);
+% figure(2);
+% colororder(newcolors);
+% 
+% for i=1:m
+%         fprintf('i=%f\n',i);
+%         [t,N]=ode45('G6_2ODE', [0 tend], N0(i,:), [], I_max,k1,k2,k3,k4,k5,kp,ke,phi_n,phi_e,zeta,gamma,a,dc);
+%         plot(t,N(:,4),'linewidth',2);
+%         hold on;
+% end
+% hold off
+% title('Cytokine Pathology')
+% ylabel('Cytokine Pathology (A.U)')
+% xlabel('Time (Days)')
+% ylim([0 3]);
+% xlim([0 20]);
+% hold off
+
