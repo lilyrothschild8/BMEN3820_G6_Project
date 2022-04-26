@@ -22,17 +22,10 @@ newcolors = [0, 0, 255;0, 150, 255; 137, 207, 240;...
 figure;
 colororder(newcolors);
 
-
-N0=[0.0001,0.00005,0;
-0.00002,0.00005,0;
-0.000002,0.00005,0;
-0.0005,0.0015,0;
-0.0005,0.0003,0;
-0.0005,0.0001,0;
-1, 0.12,0;
-1, 0.07,0;
-0.000001, 0.00002,0;
-1, 0.1,0]*I_max;
+N0(:,1)=[0.0001,0.00002,0.000002,0.0005,0.0005,0.0005,1,1,1,1e-6]'*I_max;
+N0(:,2)=[0.00005,0.00005,0.00005,0.0015,0.0003,0.0001,0.12,0.07,0.08,.00002]'*I_max;
+[m,n]=size(N0);
+N0(:,3)= zeros([1,m]);
 
 subplot(2,2,1)
 for i=1:length(N0)
@@ -41,20 +34,26 @@ for i=1:length(N0)
         loglog(N(:,1)/I_max,N(:,2)/I_max,'linewidth',2);
         hold on;
 end
+Ifun=(k3*ke-k4*kp)/(k4-k3);
+Efun=k1/k2*(1-Ifun/I_max);
+loglog(Ifun/I_max,Efun/I_max,'o','markersize',12,'markeredgecolor','r')
 hold off
+
 title('Competition Model: CD8 vs. Cells')
 xlabel('Infected cells (I/I_{max})')
 ylabel('CD8 T cells');
 axis([10^(-6) 1 10^(-6) 1]);
 hold off
- 
-N0=[0.0001,0.00005,0;...
-0.00002,0.00005,0;...
-0.000002,0.00005,0;...
-0.0005,0.0015,0;...
-0.0005,0.0003,0;...
-0.0005,0.0001,0]*I_max;
- 
+
+clear N0
+N0(:,1)=[0.0001,0.00002,0.000002,0.0005,0.0005,0.0005]'*I_max;
+N0(:,2)=[0.00005,0.00005,0.00005,0.0015,0.0003,0.0001]'*I_max;
+[m,n]=size(N0);
+N0(:,3)= zeros([1,m]);
+
+%Plot I/Imax over time
+%Apply new color arrays
+colororder(newcolors);
 subplot(2,2,2)
 colororder(newcolors);
 for i=1:length(N0)
@@ -68,7 +67,7 @@ title('Proportion of CD8 T-cells over Time')
 ylabel('Infected cells (I/I_{max})')
 xlabel('Time')
 axis([0 20 10^-6 1]);
- 
+
 subplot(2,2,3)
 colororder(newcolors);
 for i=1:length(N0)
@@ -82,7 +81,9 @@ title('Proportion of Infected Cells over Time')
 ylabel('CD8 T Cells (E/I_{max})')
 xlabel('Time')
 axis([0 20 10^-6 1]);
+
  
+%Plot Pathology (P) over time 
 subplot(2,2,4)
 colororder(newcolors);
 for i=1:length(N0)
@@ -98,10 +99,7 @@ xlabel('Time')
 axis([0 20 0 20]);
 
 %title of subplots 
-
  sgtitle({'Interaction between Infected Cells and CD8 T Cells';       
     ['I_{max}=',num2str(I_max),', k_{1}=',num2str(k1),', k_{2}=',num2str(k2),', k_{3}=',num2str(k3)...
     ', k_{4}=',num2str(k4), ', k_{p}=',num2str(kp), ', k_{e}=', num2str(ke),', a=', num2str(a)...
     ,', d_{c}=', num2str(dc),]})
-
-
